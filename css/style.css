@@ -325,7 +325,13 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  font-size: clamp(2.6rem, 0.6rem + 8.6vw, 7.5rem);
+  /* Scale to the line's own width so it never wraps. "AZARIA & MELINA"
+     measures 8.82em in Playfair Display and 9.21em in the Georgia fallback,
+     letter-spacing included; dividing the available width by 9.4 keeps it on
+     one line in either font, including while the webfont is still loading.
+     If the wording changes, re-measure and update the divisor. */
+  font-size: min(7.5rem, calc((100vw - 2 * var(--pad)) / 9.4));
+  white-space: nowrap;
   line-height: 1;
   margin: 0 0 1.25rem;
   text-shadow: 0 2px 18px rgba(40, 52, 38, 0.35);
