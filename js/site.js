@@ -4,7 +4,7 @@
   "use strict";
 
   var PAGES = [
-    ["Venue", "venue.html"],
+    ["Home", "home.html"],
     ["Travel", "travel.html"],
     ["Itinerary", "itinerary.html"],
     ["Things to Do", "things-to-do.html"],

@@ -24,7 +24,7 @@ Push to `main`, then in **Settings → Pages** set the source to `main` / `/ (ro
 
 ```
 index.html          Home — hero, monogram, live countdown
-venue.html          Our Special Day
+home.html          Our Special Day
 travel.html         About Carmel, airports, hotel blocks
 itinerary.html      The weekend, attire guide
 things-to-do.html   Local activities (no Canva design — built to match)
@@ -115,7 +115,7 @@ changes needed:
 | File | Problem |
 | --- | --- |
 | `assets/img/hero-vineyard.png` | Only a 1366×298 text-free band of the illustration. Stretched to fill the hero, so it's soft. **Most visible issue** — worth re-exporting first. |
-| `assets/img/silk.png` | 115px strip from the right edge of the venue design. |
+| `assets/img/silk.png` | 115px strip from the right edge of the home design. |
 | `assets/img/vineyard-band.jpg` | 180px-wide strip — the only column of the watercolour free of the design's baked-in nav text. It sits under a 72% green overlay, so the upscaling doesn't really show. |
 
 `assets/img/cypress.jpg` is done — it came from a clean full-res export
