@@ -114,10 +114,15 @@ changes needed:
 
 | File | Problem |
 | --- | --- |
-| `assets/img/hero-vineyard.jpg` | Only a 1366×298 text-free band of the illustration. Stretched to fill the hero, so it's soft. **Most visible issue** — worth re-exporting first. |
-| `assets/img/silk.jpg` | 115px strip from the right edge of the venue design. |
-| `assets/img/cypress.jpg` | Right portion only; the left was under the green card. |
+| `assets/img/hero-vineyard.png` | Only a 1366×298 text-free band of the illustration. Stretched to fill the hero, so it's soft. **Most visible issue** — worth re-exporting first. |
+| `assets/img/silk.png` | 115px strip from the right edge of the venue design. |
 | `assets/img/vineyard-band.jpg` | 180px-wide strip — the only column of the watercolour free of the design's baked-in nav text. It sits under a 72% green overlay, so the upscaling doesn't really show. |
+
+`assets/img/cypress.jpg` is done — it came from a clean full-res export
+(`design_base/registry-background.PNG`), downscaled to 2400px and saved as an
+82-quality JPEG, 3.3 MB → 220 KB. That's the pattern for the remaining three:
+export clean at full size, then downscale rather than dropping the original
+straight in.
 
 Hotel and registry logos (`logo-*.png`, `reg-*.png`) were lifted from the
 design and colour-keyed to transparent PNGs, so they sit on any background.
@@ -141,10 +146,7 @@ and reflows on mobile — very close to the designs, not pixel-identical.
 
 ## Placeholders to fill in
 
-- `registry.html` — **the Amazon link still points at `#`.** The three URLs
-  supplied for the registry included the Crate & Barrel one twice, so the
-  Amazon registry URL is still needed. Williams Sonoma and Crate & Barrel are
-  wired up. `[Destination]` is also still literal, as in the design.
-- `travel.html` — the four "Reserve" buttons point at `#`
+- `travel.html` — the four "Reserve" buttons are `<button disabled>` until
+  booking opens. Swap each back to `<a class="btn" href="...">Reserve</a>`.
 - `rsvp-full.html` — the "Click to Link" button points at `#`
 - `itinerary.html` — Friday reads "Afternoon Activity TBD"

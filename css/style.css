@@ -67,7 +67,7 @@ html.locked body > *:not(#gate) { display: none !important; }
   padding: var(--pad);
   background:
     linear-gradient(rgba(66, 83, 64, 0.72), rgba(66, 83, 64, 0.72)),
-    url("../assets/img/hero-vineyard.jpg") center / cover no-repeat;
+    url("../assets/img/hero-vineyard.png") center / cover no-repeat;
   background-color: var(--green);
 }
 
@@ -160,6 +160,13 @@ html.locked body > *:not(#gate) { display: none !important; }
   font-size: 0.95rem;
   font-style: italic;
   color: #f3d9c8;
+}
+
+.things-to-do {
+  background:
+    linear-gradient(rgba(66, 83, 64, 0.72), rgba(66, 83, 64, 0.72)),
+    url("../assets/img/things-to-do.png") center / cover no-repeat;
+  background-color: var(--green);
 }
 
 /* --- Navigation ---------------------------------------------------------- */
@@ -286,7 +293,10 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
   justify-content: center;
   padding: calc(var(--nav-h) + 2rem) var(--pad) 3rem;
   text-align: center;
-  background: var(--green) url("../assets/img/hero-vineyard.jpg") center bottom / cover no-repeat;
+  background:
+    linear-gradient(rgba(66, 83, 64, 0.72), rgba(66, 83, 64, 0.72)),
+    url("../assets/img/hero-vineyard.png") center / cover no-repeat;
+  background-color: var(--green);
 }
 
 /* Keeps the cream type legible over the illustration at any crop. */
@@ -342,7 +352,7 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
   display: flex;
   align-items: center;
   padding: clamp(2.5rem, 6vw, 4.5rem) var(--pad);
-  background: var(--silk) url("../assets/img/silk.jpg") center / cover no-repeat;
+  background: var(--silk) url("../assets/img/silk.png") center / cover no-repeat;
 }
 
 .venue-grid {
@@ -432,7 +442,7 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
 
 /* --- Hotels -------------------------------------------------------------- */
 .hotels {
-  background: var(--green) url("../assets/img/vineyard-band.jpg") center / cover no-repeat;
+  background: var(--green) url("../assets/img/vineyard-band.png") center / cover no-repeat;
   position: relative;
 }
 
@@ -578,6 +588,12 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
   background: #7d827c url("../assets/img/cypress.jpg") center / cover no-repeat;
 }
 
+/* The photo is 16:9 and the cypress sits on its right third, so a centred
+   crop on a tall screen shows nothing but open water. Bias toward the tree. */
+@media (max-aspect-ratio: 1 / 1) {
+  .registry { background-position: 72% center; }
+}
+
 .registry-card {
   width: min(63rem, 100%);
   margin: 0 auto;
@@ -680,9 +696,10 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
   /* The home hero's nav overlays the illustration, so give it a scrim. */
   body.home .nav-list { background: rgba(66, 83, 64, 0.97); }
 
+  /* Stack in source order — alley photo, copy, then the door photo — so the
+     left-hand image stays above the text the way it reads on desktop. */
   .about { grid-template-columns: 1fr; }
   .about img { max-height: 300px; }
-  .about-copy { order: -1; }
 
   .rsvp { grid-template-columns: 1fr; min-height: 0; }
   .rsvp-stripes { min-height: 140px; }
