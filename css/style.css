@@ -546,7 +546,7 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
 
 .weekend-card {
   padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2.5rem);
-  background: var(--tan);
+  background: rgb(184, 177, 151, 0.75);
 }
 
 .weekend-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 3vw, 2rem); }
