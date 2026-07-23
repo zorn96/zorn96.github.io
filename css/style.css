@@ -291,7 +291,9 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--nav-h) + 2rem) var(--pad) 3rem;
+  /* Equal vertical padding so the flex-centred text lands on the true
+     viewport centre (the monogram is taken out of flow below). */
+  padding: calc(var(--nav-h) + 2rem) var(--pad);
   text-align: center;
   background:
     linear-gradient(rgba(66, 83, 64, 0.72), rgba(66, 83, 64, 0.72)),
@@ -309,28 +311,40 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
 
 .hero > * { position: relative; }
 
-.hero .monogram { width: clamp(64px, 8vw, 92px); margin-bottom: clamp(1.5rem, 4vw, 2.75rem); }
+/* Pulled out of the flex flow and pinned near the top, so it sits high on the
+   page without shifting the names/date/count, which stay vertically centred. */
+.hero .monogram {
+  position: absolute;
+  top: calc(var(--nav-h) + clamp(1rem, 4vh, 3rem));
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(64px, 16vw, 128px);
+  margin: 0;
+}
 
-.hero h1 {
+/* .hero h1 {
   font-family: var(--serif);
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: clamp(1.35rem, 1rem + 1.6vw, 1.9rem);
   margin: 0 0 0.4rem;
-}
+} */
 
 .hero-names {
   font-family: var(--serif);
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.12em;
   /* Scale to the line's own width so it never wraps. "AZARIA & MELINA"
      measures 8.82em in Playfair Display and 9.21em in the Georgia fallback,
      letter-spacing included; dividing the available width by 9.4 keeps it on
      one line in either font, including while the webfont is still loading.
-     If the wording changes, re-measure and update the divisor. */
-  font-size: min(7.5rem, calc((100vw - 2 * var(--pad)) / 9.4));
+     If the wording changes, re-measure and update the divisor.
+     The 9.75rem cap is the desktop ceiling (was 7.5rem, +30%); below the
+     crossover width the divisor governs and the line already fills the
+     available width, so it can't grow further there without wrapping. */
+  font-size: min(9.75rem, calc((75vw - 2 * var(--pad)) / 9.4));
   white-space: nowrap;
   line-height: 1;
   margin: 0 0 1.25rem;
@@ -526,6 +540,10 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
 }
 
 /* --- Itinerary ----------------------------------------------------------- */
+.weekend-section {
+    background: var(--green) url("../assets/img/itinerary.png") center / cover no-repeat;
+}
+
 .weekend-card {
   padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2.5rem);
   background: var(--tan);
