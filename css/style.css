@@ -95,10 +95,12 @@ html.locked body > *:not(#gate) { display: none !important; }
 
 .gate-field { position: relative; display: flex; }
 
+/* Only the password field needs room for the reveal button. */
+.gate-field input { padding-right: 3.25rem; }
+
 .gate-form input {
   width: 100%;
-  /* right padding clears the reveal button */
-  padding: 0.85rem 3.25rem 0.85rem 1rem;
+  padding: 0.85rem 1rem;
   font-family: var(--body);
   font-size: 1.1rem;
   color: var(--green);
@@ -261,6 +263,59 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
 .wrap { max-width: 1180px; margin: 0 auto; }
 .wrap--narrow { max-width: 820px; margin: 0 auto; }
 
+/* --- FAQs ---------------------------------------------------------------- */
+.faq-page .h-script { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+
+/* Flexbox (not grid) so that a trailing row with fewer than 3 items centres
+   itself: two items sit evenly around the middle, a lone item is centred. */
+.faq {
+  --faq-col-gap: clamp(1.5rem, 3vw, 2.75rem);
+  --faq-row-gap: clamp(2.5rem, 4.5vw, 4rem);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--faq-row-gap) var(--faq-col-gap);
+  margin: 0;
+}
+
+/* One column on mobile; the -1px keeps sub-pixel rounding from wrapping a
+   full row early. */
+.faq-item {
+  flex: 0 1 100%;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .faq-item { flex-basis: calc((100% - var(--faq-col-gap)) / 2 - 1px); }
+}
+
+@media (min-width: 960px) {
+  .faq-item { flex-basis: calc((100% - 2 * var(--faq-col-gap)) / 3 - 1px); }
+}
+
+.faq dt {
+  font-family: var(--body); /* Cormorant Garamond, upright */
+  font-weight: 600;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: clamp(1.35rem, 1.1rem + 1.1vw, 1.85rem);
+  line-height: 1.2;
+  margin-bottom: 0.85rem;
+}
+
+.faq dd {
+  margin: 0;
+  font-family: var(--body);
+  font-style: normal;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  line-height: 1.6;
+}
+
+.faq dd p { margin: 0 0 0.85rem; }
+.faq dd p:last-child { margin-bottom: 0; }
+.faq dd a { text-decoration: underline; text-underline-offset: 3px; }
+
 .h-display {
   font-family: var(--serif);
   font-weight: 400;
@@ -320,6 +375,12 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
   transform: translateX(-50%);
   width: clamp(64px, 16vw, 128px);
   margin: 0;
+}
+
+/* Phones: dial the monogram down. Desktop keeps the 128px cap above; this only
+   affects small screens, and still shrinks with the viewport. */
+@media (max-width: 600px) {
+  .hero .monogram { width: clamp(52px, 12vw, 78px); }
 }
 
 /* .hero h1 {

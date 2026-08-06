@@ -10,10 +10,22 @@
     ["Things to Do", "things-to-do.html"],
     ["Photos", "photos.html"],
     ["RSVP", "rsvp.html"],
+    ["FAQs", "faq.html"],
     ["Registry", "registry.html"]
   ];
 
   var WEDDING_DATE = new Date(2027, 9, 9); // 9 October 2027, local time
+
+  // Guest name captured at the gate, stored in session cookies (uppercased).
+  // Exposed as `window.guest` so pages can tailor content per guest, e.g.
+  //   if (window.guest.first === "MELINA") { ... }
+  function readCookie(name) {
+    var match = document.cookie.match(
+      new RegExp("(?:^|;\\s*)" + name + "=([^;]*)")
+    );
+    return match ? decodeURIComponent(match[1]) : "";
+  }
+  window.guest = { first: readCookie("am_first"), last: readCookie("am_last") };
 
   function currentFile() {
     var path = window.location.pathname.split("/").pop();

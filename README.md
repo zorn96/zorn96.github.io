@@ -31,6 +31,7 @@ things-to-do.html   Local activities (no Canva design — built to match)
 photos.html         Gallery (no Canva design — built to match)
 rsvp.html           "Coming Soon" placeholder
 rsvp-full.html      The finished RSVP page, parked until it goes live
+faq.html            Frequently asked questions (edit the Q&A freely)
 registry.html
 css/style.css       Everything; palette + type as CSS custom properties
 js/gate.js          Password gate
@@ -93,8 +94,29 @@ real server-side auth (Netlify/Cloudflare Access), or encrypting the page
 content with the passphrase so the ciphertext is useless without it
 (e.g. `staticrypt`). Happy to switch it over.
 
-Unlocking is remembered in `localStorage`, so guests type it once per browser.
-Clear site data to see the gate again.
+Password entry is trimmed and **lowercased** before hashing, so phone
+auto-capitalisation and caps lock don't matter — "Azaria+Melina" and
+"azaria+melina" both work.
+
+Unlocking is remembered in `localStorage`, so the password is typed once per
+browser. Clear site data to see the gate again.
+
+## Guest names
+
+The gate also asks for the guest's first and last name (required). They're
+stored **uppercased** in session cookies (`am_first`, `am_last`) and read back
+into `window.guest` (`{ first, last }`) by `js/site.js`, so pages can tailor
+content per guest:
+
+```js
+if (window.guest.first === "MELINA") { /* ... */ }
+```
+
+Because they're *session* cookies, they clear when the browser closes. The
+lock check requires the name cookie too, so the gate reappears when it's
+gone — but if the visitor is still unlocked, it only asks for the name again,
+not the password. (To make the names persist across sessions instead, give the
+cookies a `max-age` in `setSessionCookie` in `js/gate.js`.)
 
 ## Changing the password
 
