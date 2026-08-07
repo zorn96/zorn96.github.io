@@ -12,18 +12,66 @@
 <script>try{if(localStorage.getItem('am-unlocked')!=='1'||!/(^|;\s*)am_first=/.test(document.cookie))document.documentElement.classList.add('locked')}catch(e){document.documentElement.classList.add('locked')}</script>
 <script src="js/gate.js" defer></script>
 <script src="js/site.js" defer></script>
+<script src="js/rsvp.js" defer></script>
 </head>
 <body>
 
-<!-- The full RSVP page is built and kept in rsvp-full.html. To go live,
-     swap the two files (and delete this placeholder). -->
-
 <div data-nav></div>
 
-<main class="coming-soon">
-  <div>
-    <h1 class="h-script">Coming Soon!</h1>
-    <p>We're still putting the final details together. Check back before <strong>July 1<sup>st</sup>, 2027</strong> to send us your RSVP.</p>
+<main class="section section--green">
+  <div class="wrap--narrow rsvp-page">
+    <h1 class="h-display">RSVP</h1>
+    <p class="rsvp-intro">For now, we'd just like a rough head count. Let us know whether you're hoping to join us for the wedding weekend &mdash; a more detailed RSVP, with individual events and meals, will follow closer to the date. You can update your response any time by submitting again with the same name and email.</p>
+
+    <form class="rsvp-form" novalidate>
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="rsvp-first">First name</label>
+          <input class="form-control" id="rsvp-first" name="first" type="text"
+                 autocomplete="given-name" autocapitalize="words" maxlength="36" required />
+        </div>
+        <div class="field">
+          <label class="field-label" for="rsvp-last">Last name</label>
+          <input class="form-control" id="rsvp-last" name="last" type="text"
+                 autocomplete="family-name" autocapitalize="words" maxlength="36" required />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label" for="rsvp-email">Email</label>
+          <input class="form-control" id="rsvp-email" name="email" type="email"
+                 autocomplete="email" inputmode="email" maxlength="120" required />
+        </div>
+        <div class="field">
+          <label class="field-label" for="rsvp-phone">Mobile phone</label>
+          <input class="form-control" id="rsvp-phone" name="phone" type="tel"
+                 autocomplete="tel" inputmode="tel" maxlength="30" required />
+        </div>
+      </div>
+      <p class="field-hint">We'll only use these to send weekend updates — hotel blocks, event times, and the official RSVP when it opens.</p>
+
+      <fieldset class="field">
+        <legend class="field-label">Will you be able to attend the Wedding Weekend?</legend>
+        <label class="choice">
+          <input type="radio" name="attending" value="Yes" required />
+          <span>Yes, I'm hoping to be there</span>
+        </label>
+        <label class="choice">
+          <input type="radio" name="attending" value="No" />
+          <span>No, I won't be able to make it</span>
+        </label>
+      </fieldset>
+
+      <button class="btn rsvp-submit" type="submit">Send RSVP</button>
+      <p class="rsvp-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="rsvp-success" hidden>
+      <h2 class="h-script">Thank you!</h2>
+      <p class="rsvp-success-msg"></p>
+      <button class="btn rsvp-edit" type="button">Edit my response</button>
+    </div>
   </div>
 </main>
 

@@ -660,6 +660,93 @@ body.home .nav.nav--scrolled { background: rgba(66, 83, 64, 0.94); }
   );
 }
 
+/* --- RSVP form ----------------------------------------------------------- */
+.rsvp-page { text-align: left; }
+.rsvp-page .h-display { text-align: center; }
+
+.rsvp-intro {
+  max-width: 40rem;
+  margin: 0 auto 2.75rem;
+  text-align: center;
+}
+
+.rsvp-form .field { margin-bottom: 1.6rem; }
+
+/* Two-up on wide screens, stacked on mobile. */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1.25rem;
+}
+.field-row .field { margin-bottom: 1.6rem; }
+
+.field-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+
+.field-hint {
+  margin: 0.5rem 0 0;
+  font-size: 0.92rem;
+  font-style: italic;
+  opacity: 0.82;
+}
+
+.optional { font-style: italic; opacity: 0.7; font-size: 0.9em; }
+
+.form-control {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-family: var(--body);
+  font-size: 1.08rem;
+  color: var(--green);
+  background: var(--cream);
+  border: 1px solid rgba(246, 241, 231, 0.5);
+  border-radius: 2px;
+}
+.form-control:focus-visible { outline: 2px solid var(--cream); outline-offset: 2px; }
+.form-control--narrow { max-width: 8rem; }
+textarea.form-control { resize: vertical; min-height: 5.5rem; line-height: 1.5; }
+
+/* Radios / checkboxes */
+.rsvp-form fieldset { border: 0; margin: 0; padding: 0; }
+.rsvp-form legend { padding: 0; }
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.4rem 0;
+  cursor: pointer;
+}
+.choice input {
+  flex: 0 0 auto;
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--sage-btn);
+}
+
+.rsvp-submit { margin-top: 0.5rem; border: 0; cursor: pointer; }
+.rsvp-submit:disabled { opacity: 0.5; cursor: default; }
+
+.rsvp-status {
+  min-height: 1.4em;
+  margin: 1rem 0 0;
+  font-style: italic;
+}
+.rsvp-status.is-error { color: #f3d9c8; font-style: normal; }
+
+.rsvp-success { text-align: center; padding: 1rem 0; }
+.rsvp-success .h-script { margin-bottom: 1rem; }
+.rsvp-success-msg { max-width: 34rem; margin: 0 auto 2rem; }
+
+@media (max-width: 560px) {
+  .field-row { grid-template-columns: 1fr; gap: 0; }
+}
+
 /* --- Coming soon --------------------------------------------------------- */
 .coming-soon {
   display: flex;
