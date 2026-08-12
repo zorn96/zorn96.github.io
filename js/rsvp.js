@@ -29,6 +29,34 @@
     }
   }
 
+  // Normalize a phone number for uniform submission:
+  //  - a country code of 1 (a leading "+1", or a bare 11-digit number
+  //    beginning with 1) is dropped, leaving the 10 national digits;
+  //  - a US/Canada 10-digit number is formatted as "(xxx)xxx-xxxx";
+  //  - anything else (a non-1 country code, or more than 10 digits) just has
+  //    its spaces, dashes, and parentheses stripped, keeping any leading "+".
+  function formatPhone(raw) {
+    var trimmed = String(raw || "").trim();
+    if (!trimmed) return "";
+    var hasPlus = trimmed.charAt(0) === "+";
+    var digits = trimmed.replace(/\D/g, "");
+
+    function tenDigit(d) {
+      return "(" + d.slice(0, 3) + ")" + d.slice(3, 6) + "-" + d.slice(6);
+    }
+
+    // Country code 1 -> drop it and format the remaining 10 digits.
+    if (digits.length === 11 && digits.charAt(0) === "1") {
+      return tenDigit(digits.slice(1));
+    }
+    // No country code, exactly 10 digits.
+    if (!hasPlus && digits.length === 10) {
+      return tenDigit(digits);
+    }
+    // Non-1 country code, or an unusual length: strip separators, keep "+".
+    return (hasPlus ? "+" : "") + digits;
+  }
+
   ready(function () {
     var form = document.querySelector(".rsvp-form");
     if (!form) return;
@@ -41,6 +69,8 @@
 
     var first = form.querySelector("#rsvp-first");
     var last = form.querySelector("#rsvp-last");
+    var emailEl = form.querySelector("#rsvp-email");
+    var phoneEl = form.querySelector("#rsvp-phone");
 
     // Prefill the name from the gate so guests don't retype it. The gate
     // stores it uppercased; keep that so the upsert key stays stable.
@@ -48,6 +78,33 @@
       if (window.guest.first) first.value = window.guest.first;
       if (window.guest.last) last.value = window.guest.last;
     }
+
+    // Require at least 10 digits, counting only digits so formatting
+    // characters (spaces, dashes, parens, +) don't pad the length. Feeding
+    // it through setCustomValidity lets the browser's own validation UI and
+    // the firstInvalid() pass below handle it.
+    function validatePhone() {
+      var digits = phoneEl.value.replace(/\D/g, "");
+      phoneEl.setCustomValidity(
+        !phoneEl.value.trim() || digits.length >= 10
+          ? ""
+          : "Please enter a phone number with at least 10 digits."
+      );
+    }
+    phoneEl.addEventListener("input", validatePhone);
+
+    // Require text before and after "@", plus a dot-separated domain after it.
+    // Native type="email" allows "name@localhost" (no dot), so we tighten it.
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    function validateEmail() {
+      var value = emailEl.value.trim();
+      emailEl.setCustomValidity(
+        !value || EMAIL_RE.test(value)
+          ? ""
+          : "Please enter a valid email address, like name@example.com."
+      );
+    }
+    emailEl.addEventListener("input", validateEmail);
 
     function setStatus(message, isError) {
       status.textContent = message || "";
@@ -69,6 +126,8 @@
       event.preventDefault();
       setStatus("");
 
+      validateEmail();
+      validatePhone();
       var bad = firstInvalid();
       if (bad) {
         bad.reportValidity();
@@ -89,8 +148,10 @@
       data.set("token", TOKEN);
       data.set("first", first.value.trim());
       data.set("last", last.value.trim());
-      data.set("email", form.querySelector("#rsvp-email").value.trim());
-      data.set("phone", form.querySelector("#rsvp-phone").value.trim());
+      data.set("email", emailEl.value.trim());
+      // Reflect the normalized number back into the field, then submit it.
+      phoneEl.value = formatPhone(phoneEl.value);
+      data.set("phone", phoneEl.value);
       data.set("attending", attending ? attending.value : "");
 
       submit.disabled = true;
