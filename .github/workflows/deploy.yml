@@ -1,0 +1,44 @@
+# Publishes the site to GitHub Pages on every push to main.
+#
+# Deploying from a workflow (instead of straight from the branch) lets
+# tools/stamp-assets.py add cache-busting hashes to the published copy, so
+# visitors see changes right away rather than up to ten minutes later.
+# Requires Settings -> Pages -> Source: "GitHub Actions".
+
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let an in-progress deploy finish; queue the next one behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Stamp asset hashes and build ID
+        run: python3 tools/stamp-assets.py "$GITHUB_SHA"
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v5

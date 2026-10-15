@@ -128,6 +128,33 @@
     setInterval(render, 60 * 60 * 1000);
   }
 
+  // GitHub Pages lets browsers reuse a page for ten minutes, so right after a
+  // deploy a visitor can be shown a stale copy. The deploy stamps its build ID
+  // into a <meta> tag and into version.json (tools/stamp-assets.py); if they
+  // disagree, this page predates the deploy, so reload once to fetch the new one.
+  function checkForNewBuild() {
+    var meta = document.querySelector('meta[name="build"]');
+    if (!meta || !window.fetch) return; // unstamped local copy
+
+    fetch("version.json", { cache: "no-store" })
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (latest) {
+        if (!latest || !latest.build || latest.build === meta.content) return;
+        // Reload at most once per build, so a CDN that's still catching up
+        // can't trap the page in a reload loop.
+        try {
+          if (sessionStorage.getItem("am-reloaded-for") === latest.build) return;
+          sessionStorage.setItem("am-reloaded-for", latest.build);
+        } catch (e) {
+          return;
+        }
+        window.location.reload();
+      })
+      .catch(function () {});
+  }
+
+  checkForNewBuild();
+
   function init() {
     buildNav();
     buildFooter();

@@ -17,8 +17,24 @@ python3 -m http.server 8000
 
 ## Deploying
 
-It's a plain static site at the repo root, so GitHub Pages needs no build step.
-Push to `main`, then in **Settings → Pages** set the source to `main` / `/ (root)`.
+Push to `main`. `.github/workflows/deploy.yml` publishes the site to GitHub
+Pages; in **Settings → Pages** the source must be set to **GitHub Actions**.
+
+The workflow exists for cache busting. GitHub Pages serves everything with
+`Cache-Control: max-age=600`, so without help, visitors can see a stale page
+(or new HTML with old CSS) for up to ten minutes after a deploy. Before
+publishing, `tools/stamp-assets.py` rewrites the published copy (never the
+repo) so that:
+
+- every local CSS, JS, and image reference carries `?v=<content hash>`, so a
+  changed file gets a new URL;
+- each page carries `<meta name="build">` with the commit SHA, matching a
+  generated `version.json`. `js/site.js` fetches `version.json` uncached on
+  every page load and, if the page is from an older build, reloads once.
+
+Run locally, the files are unstamped and the check does nothing. Reference
+assets with plain relative paths (`css/style.css`, `assets/img/x.png`), as the
+existing pages do, and the script will pick them up.
 
 ## Layout
 
