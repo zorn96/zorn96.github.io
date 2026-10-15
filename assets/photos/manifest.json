@@ -34,7 +34,6 @@
     "w": 1350,
     "h": 1800
   },
-
   {
     "src": "assets/photos/web/IMG_7075.JPG",
     "w": 1350,
@@ -71,9 +70,19 @@
     "h": 1800
   },
   {
+    "src": "assets/photos/web/IMG_0977.JPG",
+    "w": 1333,
+    "h": 1800
+  },
+  {
     "src": "assets/photos/web/IMG_1026.jpg",
     "w": 1012,
     "h": 1518
+  },
+  {
+    "src": "assets/photos/web/IMG_0768.jpg",
+    "w": 1800,
+    "h": 1200
   },
   {
     "src": "assets/photos/web/IMG_1027.jpg",
@@ -86,13 +95,28 @@
     "h": 765
   },
   {
+    "src": "assets/photos/web/IMG_0981.JPG",
+    "w": 1200,
+    "h": 1800
+  },
+  {
     "src": "assets/photos/web/IMG_1029.jpg",
     "w": 1007,
     "h": 1515
   },
   {
+    "src": "assets/photos/web/IMG_0769.jpg",
+    "w": 1200,
+    "h": 1800
+  },
+  {
     "src": "assets/photos/web/IMG_1030.jpg",
     "w": 996,
     "h": 1508
+  },
+  {
+    "src": "assets/photos/web/IMG_0979.JPG",
+    "w": 1188,
+    "h": 1800
   }
 ]
